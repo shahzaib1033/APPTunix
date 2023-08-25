@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Messages } from '../schemas/Message.schema';
-import { ApiResponse } from 'src/config/dto/respose.dto';
+import { ApiResponse } from 'src/dto/respose.dto';
 import { BadRequestException } from '@nestjs/common/exceptions';
 import { CreateMessageDto } from './dto/messges.dto';
 

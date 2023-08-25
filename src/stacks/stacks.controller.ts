@@ -1,12 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { StacksService } from './stacks.service';
 import { CreateStackDto } from './dto/create-stack.dto';
 import { UpdateStackDto } from './dto/update-stack.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { randomUUID } from 'crypto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage, File } from 'multer';
-
+import { ApiResponse } from 'src/dto/respose.dto';
 
 @Controller('stacks')
 @ApiTags('Stacks')
@@ -14,50 +20,59 @@ export class StacksController {
   constructor(private readonly stacksService: StacksService) {}
 
   @Post()
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: './public/uploads',
-        filename: (req, file, callback) => {
-          const uniqueFilename = `${
-            randomUUID() + '-' + file.originalname.replace(' ', '')
-          }`;
-          callback(null, uniqueFilename);
-        },
-      }),
-      limits: {
-        fileSize: 1024 * 1024 * 4, // 4MB limit
-      },
-      fileFilter: (req, file, callback) => {
-        if (!file) {
-          callback(null, true);
-        } else {
-          callback(null, true);
-        }
-      },
-    }),
-  )
-  create(@Body() createStackDto: CreateStackDto) {
-    return this.stacksService.create(createStackDto);
+  async create(@Body() createStackDto: CreateStackDto) {
+    try {
+      const data = await this.stacksService.create(createStackDto);
+      if (data) {
+        return new ApiResponse(true, data, 'successfully added', null);
+      }
+    } catch (error) {
+      console.log(error);
+      return new ApiResponse(false, null, 'Error', error.message);
+    }
   }
 
   @Get()
-  findAll() {
-    return this.stacksService.findAll();
+ async findAll() {
+    try {
+      const data = await this.stacksService.findAll();
+      return new ApiResponse(true, data, 'success', null);
+    } catch (error) {
+      console.log(error);
+      return new ApiResponse(false, null, 'Error', error.message);
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.stacksService.findOne(+id);
+ async findOne(@Param('id') id: string) {
+  try {
+    const data = await this.stacksService.findOne(id);
+    return new ApiResponse(true, data, 'success', null);
+  } catch (error) {
+    console.log(error);
+    return new ApiResponse(false, null, 'Error', error.message);
+  }
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStackDto: UpdateStackDto) {
-    return this.stacksService.update(+id, updateStackDto);
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateStackDto: UpdateStackDto) {
+    try {
+      const data = await this.stacksService.update(id, updateStackDto);
+      return new ApiResponse(true, data, 'successfully updated', null);
+    } catch (error) {
+      console.log(error);
+      return new ApiResponse(false, null, 'Error', error.message);
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.stacksService.remove(+id);
+  async remove(@Param('id') id: string) {
+  try {
+    const data = await this.stacksService.remove(id);
+    return new ApiResponse(true, data, 'successfully deleted', null);
+  } catch (error) {
+    console.log(error);
+    return new ApiResponse(false, null, 'Error', error.message);
+  }
   }
 }

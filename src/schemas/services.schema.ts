@@ -8,7 +8,7 @@ export class service extends Document {
     picture: string
     @Prop({required:true})
     heading: string;
-    @Prop()
+    @Prop({required:true})
     description: string;
 }
 

@@ -5,19 +5,12 @@ import {
   Put,
   Delete,
   Param,
-  Body,
-  BadRequestException,
-  UploadedFile,
-  UseInterceptors,
+  Body,  
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { TrustedService } from './trusted.service';
-import { Trusted } from '../schemas/TrustedBy.schema';
 import { TrustedDto } from './dto/trusted.dto';
-import { ApiResponse } from 'src/config/dto/respose.dto';
-import { randomUUID } from 'crypto';
-import { diskStorage, File } from 'multer';
+import { ApiResponse } from 'src/dto/respose.dto';
 import 'dotenv/config';
 
 @Controller('trusted')
@@ -26,35 +19,10 @@ export class TrustedController {
   constructor(private readonly trustedService: TrustedService) {}
 
   @Post()
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: './public/uploads',
-        filename: (req, file, callback) => {
-          const uniqueFilename = `${
-            randomUUID() + '-' + file.originalname.replace(' ', '')
-          }`;
-          callback(null, uniqueFilename);
-        },
-      }),
-      limits: {
-        fileSize: 1024 * 1024 * 4, // 4MB limit
-      },
-      fileFilter: (req, file, callback) => {
-        if (!file) {
-          callback(null, true);
-        } else {
-          callback(null, true);
-        }
-      },
-    }),
-  )
   async createTrusted(
-    @UploadedFile() image: File,
     @Body() createTrustedDto: TrustedDto,
   ) {
     try {
-      createTrustedDto.picture = process.env.BASE_URL + '/' + image.path;
       const data = await this.trustedService.createTrusted(createTrustedDto);
       return new ApiResponse(true, data, 'Added successfully', null);
     } catch (error) {
@@ -63,23 +31,7 @@ export class TrustedController {
     }
   }
 
-  // @ApiConsumes('multipart/form-data')
-  // async updateUserProfile(
-
-  //   @Body() body: TrustedDto,
-  //   @UploadedFile() image: Express.Multer.File,
-  // ) {
-  //   try {
-  //     if (image) {
-  //       body.picture = process.env.BASE_URL + '/' + image.path;
-  //     }
-  //     const resp = await this.trustedService.createTrusted(body);
-  //     return new ApiResponse(true, resp, '', null);
-  //   } catch (error) {
-  //     console.log(error);
-  //     return new ApiResponse(false, null, 'Error', error.message);
-  //   }
-  // }
+  
   @Get()
   async getAllTrusted() {
     try {

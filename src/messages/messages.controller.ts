@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { Messages } from '../schemas/Message.schema';
-import { ApiResponse } from 'src/config/dto/respose.dto';
+import { ApiResponse } from 'src/dto/respose.dto';
 import { CreateMessageDto } from './dto/messges.dto';
 import { ApiTags } from '@nestjs/swagger';
 

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Trusted } from '../schemas/TrustedBy.schema';
+import { Trusted } from '../schemas/trustedty.schema';
 import { TrustedDto } from './dto/trusted.dto';
 
 @Injectable()
@@ -21,17 +21,14 @@ export class TrustedService {
   }
 
   async getTrustedId(id: string): Promise<Trusted> {
-    const trusted = await this.trustedModel.findById({_id:id}).exec();
+    const trusted = await this.trustedModel.findById({ _id: id }).exec();
     if (!trusted) {
       throw new NotFoundException('Trusted record not found');
     }
     return trusted;
   }
 
-  async updateTrusted(
-    id: string,
-    TrustedDto: TrustedDto,
-  ): Promise<Trusted> {
+  async updateTrusted(id: string, TrustedDto: TrustedDto): Promise<Trusted> {
     const updatedTrusted = await this.trustedModel.findByIdAndUpdate(
       id,
       TrustedDto,
@@ -46,9 +43,9 @@ export class TrustedService {
   async deleteTrusted(id: string) {
     const result = await this.trustedModel.deleteOne({ _id: id }).exec();
     if (result.deletedCount === 0) {
-     throw new NotFoundException('Trusted record not found');
+      throw new NotFoundException('Trusted record not found');
     } else {
-      return result
+      return result;
     }
   }
 }
