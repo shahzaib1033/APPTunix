@@ -5,13 +5,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { v4 as uuid } from 'uuid';
-import * as path from 'path';
 import { diskStorage ,File} from 'multer';
 import { ApiResponse } from '../dto/respose.dto';
 import { randomUUID } from 'crypto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('upload')
+@ApiTags('upload')
 export class FileUploadController {
   @Post()
   @UseInterceptors(

@@ -13,5 +13,5 @@ export class UpdateIndustryDto extends PartialType(IndustryDto) {
   description: string;
 
   @ApiProperty()
-  demoPictures: string[];
+  demoPicture: string;
 }

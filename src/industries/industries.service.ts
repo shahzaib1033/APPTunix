@@ -14,8 +14,8 @@ export class IndustriesService {
   ) { }
   
   async create(createIndustryDto: IndustryDto) {
-      const createdStack = new this.industryModel(createIndustryDto);
-      return await createdStack.save();
+    const createdindustry = new this.industryModel(createIndustryDto);
+      return await createdindustry.save();
   }
 
   async findAll() {
@@ -28,11 +28,11 @@ return await this.industryModel.findById({_id:id}).exec();
 
  async update(id: string, updateIndustryDto: UpdateIndustryDto) {
       const to_update = await this.industryModel.findById({ _id: id }).exec();
-   const { iconPicture, heading, description, demoPictures} = updateIndustryDto;
+   const { iconPicture, heading, description, demoPicture } = updateIndustryDto;
       to_update.iconPicture = iconPicture || to_update.iconPicture;
       to_update.heading = heading || to_update.heading;
       to_update.description = description || to_update.description;
-      to_update.demoPictures = demoPictures || to_update.demoPictures;
+      to_update.demoPicture = demoPicture || to_update.demoPicture;
       const updated = await to_update.save();
       return updated;
   }

@@ -9,6 +9,8 @@ import { OurteamModule } from './ourteam/ourteam.module';
 import { UploadedFile } from './file-upload/upload.module';
 import { ServicesModule } from './services/services.module';
 import { IndustriesModule } from './industries/industries.module';
+import { AchievementModule } from './achievement/achievement.module';
+import { DevelopmentsModule } from './developments/developments.module';
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.MONGODB_URL),
@@ -19,6 +21,8 @@ import { IndustriesModule } from './industries/industries.module';
     UploadedFile,
     ServicesModule,
     IndustriesModule,
+    AchievementModule,
+    DevelopmentsModule,
   ],
   controllers: [],
   providers: [],

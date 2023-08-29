@@ -1,20 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
-export class IndustryDto {
+export class CreateAchievementDto {
   @IsNotEmpty()
   @ApiProperty()
-  iconPicture: string;
+  type: string;
 
   @IsNotEmpty()
   @ApiProperty()
-  heading: string;
+  picture: string;
+
+  @IsNotEmpty()
+  @ApiProperty()
+  title: string;
 
   @IsNotEmpty()
   @ApiProperty()
   description: string;
-
-  @IsNotEmpty()
-  @ApiProperty()
-  demoPicture: string;
 }

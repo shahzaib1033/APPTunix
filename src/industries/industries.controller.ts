@@ -12,8 +12,10 @@ import { IndustriesService } from './industries.service';
 import { IndustryDto } from './dto/create-industry.dto';
 import { UpdateIndustryDto } from './dto/update-industry.dto';
 import { ApiResponse } from 'src/dto/respose.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('industries')
+@ApiTags('industries')
 export class IndustriesController {
   constructor(private readonly industriesService: IndustriesService) {}
 
@@ -23,49 +25,54 @@ export class IndustriesController {
       const data = await this.industriesService.create(IndustryDto);
       return new ApiResponse(true, data, 'Added Successfully', null);
     } catch (error) {
-      return new ApiResponse(true, null, 'error', error);
+      return new ApiResponse(false, null, 'error', error);
+
     }
   }
 
   @Get()
-  findAll() {
+ async findAll() {
     try {
-      const data = this.industriesService.findAll();
+      const data = await this.industriesService.findAll();
       return new ApiResponse(true, data, 'Added Successfully', null);
     } catch (error) {
-      return new ApiResponse(true, null, 'error', error);
+      return new ApiResponse(false, null, 'error', error);
+
     }
   }
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
-      const data =await this.industriesService.findOne(id);
+      const data = await this.industriesService.findOne(id);
       return new ApiResponse(true, data, 'Added Successfully', null);
     } catch (error) {
-      return new ApiResponse(true, null, 'error', error);
+      return new ApiResponse(false, null, 'error', error);
+
     }
   }
 
   @Put(':id')
- async update(
+  async update(
     @Param('id') id: string,
     @Body() updateIndustryDto: UpdateIndustryDto,
   ) {
     try {
-      const data =await this.industriesService.update(id, updateIndustryDto);
+      const data = await this.industriesService.update(id, updateIndustryDto);
       return new ApiResponse(true, data, 'Added Successfully', null);
     } catch (error) {
-      return new ApiResponse(true, null, 'error', error);
+      return new ApiResponse(false, null, 'error', error);
+
     }
   }
 
   @Delete(':id')
- async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     try {
       const data = await this.industriesService.remove(id);
       return new ApiResponse(true, data, 'Added Successfully', null);
     } catch (error) {
-      return new ApiResponse(true, null, 'error', error);
+      return new ApiResponse(false, null, 'error', error);
+
     }
   }
 }

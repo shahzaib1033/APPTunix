@@ -1,10 +1,7 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { Prop } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-
-
-
-export class Industery extends Document {
+@Schema()
+export class Industery {
   @Prop({ required: true, type: String })
   iconPicture: string;
 
@@ -14,7 +11,7 @@ export class Industery extends Document {
   @Prop({ required: true, type: String })
   description: string;
 
-  @Prop({ required: true, type: [String] })
-  demoPictures: string[];
-
+  @Prop({ required: true, type: String })
+  demoPicture: string;
 }
+export const industrySchema = SchemaFactory.createForClass(Industery);
