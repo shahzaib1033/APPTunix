@@ -40,6 +40,16 @@ export class IndustriesController {
 
     }
   }
+  @Get('/count')
+  async count() {
+    try {
+      const data = await this.industriesService.count();
+      return new ApiResponse(true, data, 'success', null);
+    } catch (error) {
+      console.log(error);
+      return new ApiResponse(false, null, 'Error', error.message);
+    }
+  }
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {

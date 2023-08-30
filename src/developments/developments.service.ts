@@ -45,4 +45,12 @@ const toUpdate = await this.developmentModel.findOne({_id:id})
   remove(id: string) {
     return this.developmentModel.findByIdAndDelete(id);
   }
+  async count(): Promise<number> {
+    try {
+      const count = await this.developmentModel.countDocuments().exec();
+      return count;
+    } catch (error) {
+      throw new Error('Error counting documents');
+    }
+  }
 }

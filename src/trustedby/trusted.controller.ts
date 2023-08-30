@@ -42,6 +42,16 @@ export class TrustedController {
       return new ApiResponse(false, null, 'Error', error.message);
     }
   }
+  @Get('/count')
+  async count() {
+    try{
+    const data = await this.trustedService.count();
+    return new ApiResponse(true, data, 'success', null);
+  } catch(error) {
+    console.log(error);
+    return new ApiResponse(false, null, 'Error', error.message);
+  }
+  }
 
   @Get(':id')
   async getTrustedId(@Param('id') id: string) {
@@ -85,4 +95,6 @@ export class TrustedController {
       return new ApiResponse(false, null, 'Error', error.message);
     }
   }
+
+
 }

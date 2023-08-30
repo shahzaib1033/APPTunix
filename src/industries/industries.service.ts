@@ -36,6 +36,14 @@ return await this.industryModel.findById({_id:id}).exec();
       const updated = await to_update.save();
       return updated;
   }
+  async count(): Promise<number> {
+    try {
+      const count = await this.industryModel.countDocuments().exec();
+      return count;
+    } catch (error) {
+      throw new Error('Error counting documents');
+    }
+  }
 
   async remove(id: string) {
   const result = await this.industryModel.deleteOne({ _id: id }).exec();

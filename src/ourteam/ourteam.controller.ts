@@ -1,16 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { OurteamService } from './ourteam.service';
-import { CreateOurteamDto } from './dto/create-ourteam.dto';
-import { UpdateOurteamDto } from './dto/update-ourteam.dto';
+import { CreateTeamDto } from './dto/create-ourteam.dto';
+import { UpdateTeamDto } from './dto/update-ourteam.dto';
+import { JwtMiddleware } from '../dto/jwt-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiResponse } from 'src/dto/respose.dto';
 
 @Controller('ourteam')
-  @ApiTags('OurTeam')
+@ApiTags('OurTeam')
 export class OurteamController {
-  constructor(private readonly ourteamService: OurteamService) {}
+  constructor(private readonly ourteamService: OurteamService) { }
 
   @Post()
-  create(@Body() createOurteamDto: CreateOurteamDto) {
+  // @UseGuards(JwtMiddleware)
+  create(@Body() createOurteamDto: CreateTeamDto) {
     return this.ourteamService.create(createOurteamDto);
   }
 
@@ -19,18 +23,33 @@ export class OurteamController {
     return this.ourteamService.findAll();
   }
 
+  @Get('/count')
+  async count() {
+    try {
+      const data = await this.ourteamService.count();
+      return new ApiResponse(true, data, 'success', null);
+    } catch (error) {
+      console.log(error);
+      return new ApiResponse(false, null, 'Error', error.message);
+    }
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.ourteamService.findOne(+id);
+    return this.ourteamService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOurteamDto: UpdateOurteamDto) {
-    return this.ourteamService.update(+id, updateOurteamDto);
+  // @UseGuards(JwtMiddleware)
+  update(@Param('id') id: string, @Body() updateOurteamDto: UpdateTeamDto) {
+    return this.ourteamService.update(id, updateOurteamDto);
   }
 
   @Delete(':id')
+  @UseGuards(JwtMiddleware)
   remove(@Param('id') id: string) {
-    return this.ourteamService.remove(+id);
+    return this.ourteamService.remove(id);
   }
+
+
 }

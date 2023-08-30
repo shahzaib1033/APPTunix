@@ -14,8 +14,8 @@ export class CreateDevelopmentDto {
     @IsNotEmpty()
     @ApiProperty()
     region: {
-        flag: string;
-        country: string;
+        flag: string,
+        country: string
     };
 
     @IsNotEmpty()

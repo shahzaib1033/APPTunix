@@ -48,4 +48,12 @@ export class TrustedService {
       return result;
     }
   }
+  async count(): Promise<number> {
+    try {
+      const count = await this.trustedModel.countDocuments().exec();
+      return count;
+    } catch (error) {
+      throw new Error('Error counting documents');
+    }
+  }
 }

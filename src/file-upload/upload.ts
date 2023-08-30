@@ -5,7 +5,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage ,File} from 'multer';
+import { diskStorage, File } from 'multer';
 import { ApiResponse } from '../dto/respose.dto';
 import { randomUUID } from 'crypto';
 import { ApiTags } from '@nestjs/swagger';
@@ -19,9 +19,8 @@ export class FileUploadController {
       storage: diskStorage({
         destination: './public/uploads',
         filename: (req, file, callback) => {
-          const uniqueFilename = `${
-            randomUUID() + '-' + file.originalname.replace(' ', '')
-          }`;
+          const uniqueFilename = `${randomUUID() + '-' + file.originalname.replace(' ', '')
+            }`;
           callback(null, uniqueFilename);
         },
       }),
@@ -41,7 +40,7 @@ export class FileUploadController {
     @UploadedFile() image: File,
   ) {
     try {
-    const data = process.env.BASE_URL + '/' + image.path;
+      const data = process.env.BASE_URL + '/' + image.path;
       // const data = await this.trustedService.createTrusted(createTrustedDto);
       return new ApiResponse(true, data, 'Added successfully', null);
     } catch (error) {

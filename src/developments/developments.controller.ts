@@ -29,6 +29,17 @@ export class DevelopmentsController {
     }
   }
 
+
+  @Get('/count')
+  async count() {
+    try {
+      const data = await this.developmentsService.count();
+      return new ApiResponse(true, data, 'success', null);
+    } catch (error) {
+      console.log(error);
+      return new ApiResponse(false, null, 'Error', error.message);
+    }
+  }
   @Get()
  async findAll() {
     try{
