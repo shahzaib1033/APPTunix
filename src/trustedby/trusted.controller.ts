@@ -12,6 +12,7 @@ import { TrustedService } from './trusted.service';
 import { TrustedDto } from './dto/trusted.dto';
 import { ApiResponse } from 'src/dto/respose.dto';
 import 'dotenv/config';
+import { updateTrustedDto } from './dto/update-trusted';
 
 @Controller('trusted')
 @ApiTags('Trusted')
@@ -67,7 +68,7 @@ export class TrustedController {
   @Put(':id')
   async updateTrusted(
     @Param('id') id: string,
-    @Body() createTrustedDto: TrustedDto,
+    @Body() createTrustedDto: updateTrustedDto,
   ) {
     try {
       const data = await this.trustedService.updateTrusted(

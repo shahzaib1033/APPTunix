@@ -4,7 +4,7 @@ import { CreateTeamDto } from './dto/create-ourteam.dto';
 import { UpdateTeamDto } from './dto/update-ourteam.dto';
 import { JwtMiddleware } from '../dto/jwt-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
+// import { AuthGuard } from '@nestjs/passport';
 import { ApiResponse } from 'src/dto/respose.dto';
 
 @Controller('ourteam')
@@ -13,7 +13,6 @@ export class OurteamController {
   constructor(private readonly ourteamService: OurteamService) { }
 
   @Post()
-  // @UseGuards(JwtMiddleware)
   create(@Body() createOurteamDto: CreateTeamDto) {
     return this.ourteamService.create(createOurteamDto);
   }
@@ -22,8 +21,9 @@ export class OurteamController {
   findAll() {
     return this.ourteamService.findAll();
   }
-
+  
   @Get('/count')
+  // @UseGuards(AuthGuard())
   async count() {
     try {
       const data = await this.ourteamService.count();

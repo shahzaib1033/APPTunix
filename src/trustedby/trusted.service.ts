@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Trusted } from '../schemas/trustedty.schema';
 import { TrustedDto } from './dto/trusted.dto';
+import { updateTrustedDto } from './dto/update-trusted';
 
 @Injectable()
 export class TrustedService {
@@ -28,7 +29,7 @@ export class TrustedService {
     return trusted;
   }
 
-  async updateTrusted(id: string, TrustedDto: TrustedDto): Promise<Trusted> {
+  async updateTrusted(id: string, TrustedDto: updateTrustedDto): Promise<Trusted> {
     const updatedTrusted = await this.trustedModel.findByIdAndUpdate(
       id,
       TrustedDto,
@@ -40,7 +41,7 @@ export class TrustedService {
     return updatedTrusted;
   }
 
-  async deleteTrusted(id: string) {
+  async deleteTrusted(id: string) { 
     const result = await this.trustedModel.deleteOne({ _id: id }).exec();
     if (result.deletedCount === 0) {
       throw new NotFoundException('Trusted record not found');

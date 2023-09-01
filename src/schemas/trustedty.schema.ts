@@ -5,6 +5,8 @@ import { Document } from 'mongoose';
 export class Trusted extends Document {
   @Prop({ required: true })
   picture: string;
+  @Prop({ required: true })
+   name: string;
 }
 
 export const TrustedSchema = SchemaFactory.createForClass(Trusted);

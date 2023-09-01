@@ -9,5 +9,9 @@ export class TrustedDto {
   @ApiProperty()
   picture: string;
 
+  @IsNotEmpty()
+  @ApiProperty()
+  name: string;
+
 
 }
