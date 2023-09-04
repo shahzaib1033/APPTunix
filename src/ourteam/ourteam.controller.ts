@@ -2,10 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { OurteamService } from './ourteam.service';
 import { CreateTeamDto } from './dto/create-ourteam.dto';
 import { UpdateTeamDto } from './dto/update-ourteam.dto';
-import { JwtMiddleware } from '../dto/jwt-auth.guard';
+
 import { ApiTags } from '@nestjs/swagger';
-// import { AuthGuard } from '@nestjs/passport';
 import { ApiResponse } from 'src/dto/respose.dto';
+import { AccessTokenGuard } from 'src/common/guards/AccessToken.guard';
+
 
 @Controller('ourteam')
 @ApiTags('OurTeam')
@@ -13,6 +14,7 @@ export class OurteamController {
   constructor(private readonly ourteamService: OurteamService) { }
 
   @Post()
+  // @UseGuards(AccessTokenGuard)
   create(@Body() createOurteamDto: CreateTeamDto) {
     return this.ourteamService.create(createOurteamDto);
   }
@@ -23,7 +25,7 @@ export class OurteamController {
   }
   
   @Get('/count')
-  // @UseGuards(AuthGuard())
+  // @UseGuards(AccessTokenGuard)
   async count() {
     try {
       const data = await this.ourteamService.count();
@@ -40,13 +42,13 @@ export class OurteamController {
   }
 
   @Patch(':id')
-  // @UseGuards(JwtMiddleware)
+  // @UseGuards(AccessTokenGuard)
   update(@Param('id') id: string, @Body() updateOurteamDto: UpdateTeamDto) {
     return this.ourteamService.update(id, updateOurteamDto);
   }
 
   @Delete(':id')
-  @UseGuards(JwtMiddleware)
+  // @UseGuards(AccessTokenGuard)
   remove(@Param('id') id: string) {
     return this.ourteamService.remove(id);
   }

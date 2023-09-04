@@ -16,6 +16,9 @@ export class Admin {
 
     @Prop({ default: 'admin' })
     role: string;
+    
+    @Prop()
+    refreshToken: string;
 }
 
 export const AdminSchema = SchemaFactory.createForClass(Admin);

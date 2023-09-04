@@ -12,6 +12,8 @@ import { IndustriesModule } from './industries/industries.module';
 import { AchievementModule } from './achievement/achievement.module';
 import { DevelopmentsModule } from './developments/developments.module';
 import { AdminModule } from './admin/admin.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.MONGODB_URL),
@@ -25,6 +27,8 @@ import { AdminModule } from './admin/admin.module';
     AchievementModule,
     DevelopmentsModule,
     AdminModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],

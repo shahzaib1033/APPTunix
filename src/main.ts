@@ -23,7 +23,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
-  
+
   // images url set
   app.use('/public', express.static(join(__dirname, '..', 'public')));
 

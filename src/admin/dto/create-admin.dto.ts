@@ -12,4 +12,7 @@ export class CreateAdminDto {
     @IsNotEmpty()
     @IsEmail()
     email: string;
+
+    refreshToken: string;
+
 }
